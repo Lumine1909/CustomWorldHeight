@@ -18,7 +18,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
     compileOnly("io.papermc.paper:paper-server:1.20.4-R0.1-SNAPSHOT")
     implementation("com.mojang:datafixerupper:5.0.28")
-
+    implementation("net.md-5:bungeecord-chat:1.20-R0.2")
 }
 
 tasks.test {

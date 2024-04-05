@@ -1,11 +1,7 @@
-name: WorldManager
+name: CustomWorldHeight
 version: 1.1
 main: io.github.lumine1909
 api-version: 1.19
 load: STARTUP
 authors:
-  - Example
-commands:
-  removeaabb:
-    aliases:
-      - rab
+  - Lumine1909
