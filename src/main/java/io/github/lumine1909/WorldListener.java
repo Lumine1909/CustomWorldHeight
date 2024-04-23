@@ -10,6 +10,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.MinecraftKey;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.WorldServer;
+import net.minecraft.world.level.biome.BiomeBase;
 import net.minecraft.world.level.dimension.DimensionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -87,8 +88,6 @@ public class WorldListener implements Listener {
             DimensionManager dim1 = ws.ad().a();
             DimensionManager dim = new DimensionManager(dim1.f(), dim1.g(), dim1.h(), dim1.i(), dim1.j(), dim1.k(), dim1.l(), dim1.m(),
                     settingsMap.get(worldName).minY, settingsMap.get(worldName).height, settingsMap.get(worldName).logicalHeight, dim1.q(), dim1.r(), dim1.s(), dim1.t());
-            Holder<DimensionManager> dmh = Holder.a(dim);
-
             Field unregHolderF = RegistryMaterials.class.getDeclaredField("m");
             unregHolderF.setAccessible(true);
             unregHolderF.set(dimReg, new IdentityHashMap<>());
@@ -96,7 +95,7 @@ public class WorldListener implements Listener {
             frozen.setAccessible(true);
             frozen.set(dimReg, false);
             dimReg.f(dim);
-            dimReg.a(dimRes, dim, Lifecycle.stable());
+            Holder<DimensionManager> dmh = dimReg.a(dimRes, dim, Lifecycle.stable());
             unregHolderF.set(dimReg, null);
             frozen.set(dimReg, true);
             WorldSettings wse = settingsMap.get(worldName);
