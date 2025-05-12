@@ -1,0 +1,8 @@
+name: $name
+version: $version
+main: io.github.lumine1909.customworldheight.CustomWorldHeight
+api-version: $apiVersion
+description: $description
+load: STARTUP
+authors:
+  - Lumine1909

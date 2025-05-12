@@ -1,7 +1,0 @@
-name: CustomWorldHeight
-version: 1.1
-main: io.github.lumine1909.WorldManager
-api-version: 1.19
-load: STARTUP
-authors:
-  - Lumine1909

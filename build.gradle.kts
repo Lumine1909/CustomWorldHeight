@@ -1,26 +1,24 @@
 plugins {
-    id("java")
+    java
+    id("com.gradleup.shadow")
 }
 
-group = "io.github.lumine1909"
-version = "1.1"
+allprojects {
+    plugins.apply("java")
+    plugins.apply("com.gradleup.shadow")
+    //plugins.apply("io.papermc.paperweight.userdev")
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-    maven("https://repo.codemc.io/repository/nms-local/")
+    group = "io.github.lumine1909"
+    version = "1.2.0"
+    description = "A plugin that allows you modify world's height"
 
-}
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        maven("https://repo.papermc.io/repository/maven-public/")
+    }
 
-dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
-    compileOnly("io.papermc.paper:paper-server:1.20.4-R0.1-SNAPSHOT")
-    implementation("com.mojang:datafixerupper:5.0.28")
-    implementation("net.md-5:bungeecord-chat:1.20-R0.2")
-}
-
-tasks.test {
-    useJUnitPlatform()
+    java {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    }
 }
