@@ -86,17 +86,16 @@ public class DataHandler_1_21_4 implements DataHandler<DimensionType, Holder<Dim
         final int minSectionY = minY >> 4;
         final int maxSectionY = maxY >> 4;
         final int sectionsCount = maxSectionY - minSectionY + 1;
-        int minSection = data.getMinY() >> 4;
-        int maxSection = (data.getMinY() + data.getHeight() - 1) >> 4;
         set(Level.class, "minY", level, minY);
+        set(Level.class, "height", level, height);
         set(Level.class, "maxY", level, maxY);
-        set(Level.class, "minSectionY", level, minSection);
-        set(Level.class, "maxSectionY", level, maxSection);
+        set(Level.class, "minSectionY", level, minSectionY);
+        set(Level.class, "maxSectionY", level, maxSectionY);
         set(Level.class, "sectionsCount", level, sectionsCount);
-        set(lightInterface.getClass(), "minSection", lightInterface, minSection);
-        set(lightInterface.getClass(), "maxSection", lightInterface, maxSection);
-        set(lightInterface.getClass(), "minLightSection", lightInterface, minSection - 1);
-        set(lightInterface.getClass(), "maxLightSection", lightInterface, maxSection + 1);
+        set(lightInterface.getClass(), "minSection", lightInterface, minSectionY);
+        set(lightInterface.getClass(), "maxSection", lightInterface, maxSectionY);
+        set(lightInterface.getClass(), "minLightSection", lightInterface, minSectionY - 1);
+        set(lightInterface.getClass(), "maxLightSection", lightInterface, maxSectionY + 1);
         set(lightInterface.getClass(), "lightQueue", lightInterface, new StarLightInterface.ServerLightQueue(lightInterface));
     }
 }
