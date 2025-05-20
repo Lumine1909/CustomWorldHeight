@@ -1,5 +1,5 @@
 example-namespace: # You can set to anything you want
-  world: 'world' # Set for the world named 'world'
+  world: 'example-world-name' # Set for the world named 'example-world-name'
   min-y: -64 # Min Y position
   height: 1024 # Height (max Y position = min-y + height - 1)
   logical-height: 512 # Height for Chorus Fruit teleport and etc. See wiki for details

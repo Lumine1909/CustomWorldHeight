@@ -19,7 +19,7 @@ import java.util.IdentityHashMap;
 
 import static io.github.lumine1909.customworldheight.util.ReflectionUtil.set;
 
-public class DataHandler_1_21_4 implements DataHandler<DimensionType, Holder<DimensionType>, ResourceKey<DimensionType>> {
+public class DataHandler_1_21_3 implements DataHandler<DimensionType, Holder<DimensionType>, ResourceKey<DimensionType>> {
 
     private static final MappedRegistry<DimensionType> REGISTRY = (MappedRegistry<DimensionType>) MinecraftServer.getServer().registryAccess().lookup(Registries.DIMENSION_TYPE).orElseThrow();
 
@@ -42,7 +42,7 @@ public class DataHandler_1_21_4 implements DataHandler<DimensionType, Holder<Dim
 
     @Override
     public LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> createData(World world) {
-        return new LevelData_1_21_4(world.getName(), LevelConfig.getHeight(world.getName()));
+        return new LevelData_1_21_3(world.getName(), LevelConfig.getHeight(world.getName()));
     }
 
     @Override
@@ -96,6 +96,5 @@ public class DataHandler_1_21_4 implements DataHandler<DimensionType, Holder<Dim
         set(lightInterface.getClass(), "maxSection", lightInterface, maxSectionY);
         set(lightInterface.getClass(), "minLightSection", lightInterface, minSectionY - 1);
         set(lightInterface.getClass(), "maxLightSection", lightInterface, maxSectionY + 1);
-        set(lightInterface.getClass(), "lightQueue", lightInterface, new StarLightInterface.ServerLightQueue(lightInterface));
     }
 }

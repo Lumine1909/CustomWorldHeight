@@ -16,7 +16,6 @@ public class LevelConfig {
             int height = config.getInt(key + ".height", 384);
             int minY = config.getInt(key + ".min-y", -64);
             int logicalHeight = config.getInt(key + ".logical-height", 256);
-            System.out.println("Loaded world: " + name + " for Height: " + height);
             HEIGHT_MAP.put(name, new Height(height, minY, logicalHeight));
         }
     }

@@ -5,9 +5,9 @@ import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.dimension.DimensionType;
 
-public class LevelData_1_21_4 extends LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> {
+public class LevelData_1_21_3 extends LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> {
 
-    public LevelData_1_21_4(String name, Height height) {
+    public LevelData_1_21_3(String name, Height height) {
         super(name, height);
     }
 }

@@ -16,4 +16,6 @@ pluginManagement {
 
 include(":plugin")
 include(":core")
-include(":nms:nms_1_21_4")
+include(":nms:nms_1_21_3")
+include(":nms:nms_1_21")
+include(":nms:nms_1_20_5")

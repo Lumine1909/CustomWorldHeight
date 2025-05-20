@@ -9,7 +9,7 @@ allprojects {
     //plugins.apply("io.papermc.paperweight.userdev")
 
     group = "io.github.lumine1909"
-    version = "1.2.0"
+    version = "1.3.0"
     description = "A plugin that allows you modify world's height"
 
     repositories {
