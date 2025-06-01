@@ -15,13 +15,13 @@ public class WorldListener implements Listener {
     @SuppressWarnings("unchecked")
     @EventHandler
     public void onWorldInit(WorldInitEvent e) {
-        if (!LevelConfig.shouldProcess(e.getWorld().getName())) {
+        String configKey;
+        World world = e.getWorld();
+        if ((configKey = LevelConfig.checkConfigData(world.getName())) == null) {
             return;
         }
-        World world = e.getWorld();
         plugin.getLogger().info("Modifying world " + world.getName() + "'s height...");
-        LevelData<?, ?, ?> data = dataHandler.createData(world);
-        dataHandler.processData(data, dataHandler.getHolder(world));
+        LevelData<?, ?, ?> data = LevelConfig.getDataOrThrow(configKey);
         dataHandler.processWorld(world, data);
     }
 }

@@ -1,7 +1,8 @@
 package io.github.lumine1909.customworldheight.data;
 
 import ca.spottedleaf.starlight.common.light.StarLightInterface;
-import io.github.lumine1909.customworldheight.config.LevelConfig;
+import io.github.lumine1909.customworldheight.config.BaseDimension;
+import io.github.lumine1909.customworldheight.config.Height;
 import io.papermc.paper.chunk.system.entity.EntityLookup;
 import net.minecraft.core.Holder;
 import net.minecraft.core.MappedRegistry;
@@ -12,6 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.CraftWorld;
@@ -42,8 +44,19 @@ public class DataHandler_1_20_5 implements DataHandler<DimensionType, Holder<Dim
     }
 
     @Override
-    public LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> createData(World world) {
-        return new LevelData_1_20_5(world.getName(), LevelConfig.getHeight(world.getName()));
+    public LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> createData(String name, Height height, BaseDimension dimension) {
+        LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> levelData = new LevelData_1_20_5(name, height, dimension);
+        switch (dimension) {
+            case OVERWORLD -> processData(levelData, REGISTRY.getHolderOrThrow(BuiltinDimensionTypes.OVERWORLD));
+            case NETHER -> processData(levelData, REGISTRY.getHolderOrThrow(BuiltinDimensionTypes.NETHER));
+            case END -> processData(levelData, REGISTRY.getHolderOrThrow(BuiltinDimensionTypes.END));
+            case CAVES -> processData(levelData, REGISTRY.getHolderOrThrow(BuiltinDimensionTypes.OVERWORLD_CAVES));
+            case CUSTOM -> levelData.accessor = world -> {
+                processData(levelData, getHolder(world));
+                return levelData.getHolder(world);
+            };
+        }
+        return levelData;
     }
 
     @Override
@@ -78,7 +91,7 @@ public class DataHandler_1_20_5 implements DataHandler<DimensionType, Holder<Dim
     public void processWorld(World world, LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> data) {
         ServerLevel level = ((CraftWorld) world).getHandle();
 
-        Holder<DimensionType> holder = data.getHolder();
+        Holder<DimensionType> holder = data.getHolder(world);
         set(Level.class, "dimensionTypeRegistration", level, holder);
         StarLightInterface lightInterface = level.getChunkSource().getLightEngine().theLightEngine;
         EntityLookup entityLookup = level.getEntityLookup();

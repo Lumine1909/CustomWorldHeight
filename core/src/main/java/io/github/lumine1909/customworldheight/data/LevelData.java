@@ -1,19 +1,27 @@
 package io.github.lumine1909.customworldheight.data;
 
+import io.github.lumine1909.customworldheight.config.BaseDimension;
 import io.github.lumine1909.customworldheight.config.Height;
+import org.bukkit.World;
+
+import java.util.function.Function;
 
 public class LevelData<DimensionType, ResourceKey, Holder> {
 
-    protected String name;
+    protected final String name;
     protected Height height;
+    protected BaseDimension dimension;
 
     protected DimensionType dimensionType;
     protected ResourceKey resourceKey;
     protected Holder holder;
 
-    public LevelData(String name, Height height) {
+    protected Function<World, Holder> accessor;
+
+    public LevelData(String name, Height height, BaseDimension dimension) {
         this.name = name;
         this.height = height;
+        this.dimension = dimension;
     }
 
     public String getName() {
@@ -48,7 +56,11 @@ public class LevelData<DimensionType, ResourceKey, Holder> {
         this.dimensionType = dimensionType;
     }
 
-    public Holder getHolder() {
+    public Holder getHolder(World world) {
+        if (holder != null) {
+            return holder;
+        }
+        this.holder = accessor.apply(world);
         return holder;
     }
 
