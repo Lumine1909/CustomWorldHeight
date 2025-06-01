@@ -13,12 +13,12 @@ import static io.github.lumine1909.customworldheight.CustomWorldHeight.plugin;
 
 public class LevelConfig {
 
-    private static final Map<String, String> W0RLD_NAME_MAP = new HashMap<>();
+    private static final Map<String, String> WORLD_NAME_MAP = new HashMap<>();
     private static final Map<String, String> WORLD_REGEX_MAP = new TreeMap<>();
     private static final Map<String, LevelData<?, ?, ?>> CACHED_DATA = new HashMap<>();
 
     public static void readData(FileConfiguration config) {
-        W0RLD_NAME_MAP.clear();
+        WORLD_NAME_MAP.clear();
         WORLD_REGEX_MAP.clear();
         for (String key : config.getKeys(false)) {
             String name = config.getString(key + ".world", null);
@@ -33,7 +33,7 @@ public class LevelConfig {
             );
             Height h = new Height(height, minY, logicalHeight);
             if (name != null) {
-                W0RLD_NAME_MAP.put(name, key);
+                WORLD_NAME_MAP.put(name, key);
             } else {
                 WORLD_REGEX_MAP.put(regex, key);
             }
@@ -46,8 +46,8 @@ public class LevelConfig {
     }
 
     public static String checkConfigData(String worldName) {
-        if (WORLD_REGEX_MAP.containsKey(worldName)) {
-            return W0RLD_NAME_MAP.get(worldName);
+        if (WORLD_NAME_MAP.containsKey(worldName)) {
+            return WORLD_NAME_MAP.get(worldName);
         }
         for (Map.Entry<String, String> entry : WORLD_REGEX_MAP.entrySet()) {
             if (worldName.matches(entry.getKey())) {
