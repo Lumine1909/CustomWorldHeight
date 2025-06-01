@@ -33,16 +33,47 @@ Follow these steps to install the plugin:
 ## Configuration
 
 ```yaml
-example-namespace: # You can set to anything you want
-  world: 'world' # Set for the world named 'world'
-  min-y: -64 # Min Y position
-  height: 1024 # Height (max Y position = min-y + height - 1)
-  logical-height: 512 # Height for Chorus Fruit teleport and etc. See wiki for details
+# You can set to anything you want, will be used to generate ResourceLocation
+example-namespace:
+
+  # Set the name for certain world
+  world: 'example-world-name'
+
+  # Min Y position
+  min-y: -64
+
+  # Height (max Y position = min-y + height - 1)
+  height: 1024
+
+  # Height for Chorus Fruit teleport and etc. See wiki for details
+  logical-height: 512
+
+  # This will let the plugin process registration data when world load
+  dimension-type: 'custom'
+
+# You can set to anything you want, will be used to generate ResourceLocation
+example-regex:
+
+  # This plugin also support Regex matching
+  regex: '^test_\w+'
+
+  # Min Y position
+  min-y: -64
+
+  # Height (max Y position = min-y + height - 1)
+  height: 1024
+
+  # Height for Chorus Fruit teleport and etc. See wiki for details
+  logical-height: 512
+
+
+  # For 'overworld', 'the_nether', 'the_end', 'overworld_cave', this will use built in data to generate before world is initializing
+  dimension-type: 'overworld'
 ```
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [GPL 3.0 License](LICENSE).
 
 ## Support
 
