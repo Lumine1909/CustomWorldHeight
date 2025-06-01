@@ -5,6 +5,7 @@ import io.github.lumine1909.customworldheight.data.DataHandler;
 import io.github.lumine1909.customworldheight.data.DataHandler_1_20_5;
 import io.github.lumine1909.customworldheight.data.DataHandler_1_21;
 import io.github.lumine1909.customworldheight.data.DataHandler_1_21_3;
+import io.github.lumine1909.customworldheight.metrics.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -58,6 +59,7 @@ public class CustomWorldHeight extends JavaPlugin implements Listener {
         LevelConfig.readData(getConfig());
         Bukkit.getPluginManager().registerEvents(new WorldListener(), this);
         Bukkit.getPluginManager().registerEvents(this, this);
+        new Metrics(this, 26056);
     }
 
     @EventHandler
