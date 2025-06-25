@@ -3,10 +3,8 @@ package io.github.lumine1909.customworldheight.config;
 import io.github.lumine1909.customworldheight.data.LevelData;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.function.Function;
 
 import static io.github.lumine1909.customworldheight.CustomWorldHeight.dataHandler;
 import static io.github.lumine1909.customworldheight.CustomWorldHeight.plugin;
@@ -26,12 +24,25 @@ public class LevelConfig {
             int height = config.getInt(key + ".height", 384);
             int minY = config.getInt(key + ".min-y", -64);
             int logicalHeight = config.getInt(key + ".logical-height", 256);
+            String cloudHeight = config.getString(key + ".cloud-height", "empty");
             String dimension = config.getString(key + ".dimension-type", "custom");
+            Function<Optional<Integer>, Optional<Integer>> cloudHeightFunc = switch (cloudHeight) {
+                case "empty" -> v -> Optional.empty();
+                case "default" -> Function.identity();
+                default -> {
+                    try {
+                        int r = Integer.parseInt(cloudHeight);
+                        yield t -> Optional.of(r);
+                    } catch (NumberFormatException ignored) {
+                    }
+                    yield Function.identity();
+                }
+            };
             plugin.getSLF4JLogger().info(
-                "Loaded config: name={}, regex={}, height={}, minY={}, logicalHeight={}, dimension={}",
-                name, regex, height, minY, logicalHeight, dimension
+                "Loaded config: name={}, regex={}, height={}, minY={}, logicalHeight={}, dimension={}, couldHeight={}",
+                name, regex, height, minY, logicalHeight, dimension, cloudHeight
             );
-            Height h = new Height(height, minY, logicalHeight);
+            Height h = new Height(height, minY, logicalHeight, cloudHeightFunc);
             if (name != null) {
                 WORLD_NAME_MAP.put(name, key);
             } else {

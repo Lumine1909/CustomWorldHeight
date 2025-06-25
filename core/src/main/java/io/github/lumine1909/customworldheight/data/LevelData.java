@@ -4,6 +4,7 @@ import io.github.lumine1909.customworldheight.config.BaseDimension;
 import io.github.lumine1909.customworldheight.config.Height;
 import org.bukkit.World;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 public class LevelData<DimensionType, ResourceKey, Holder> {
@@ -38,6 +39,10 @@ public class LevelData<DimensionType, ResourceKey, Holder> {
 
     public int getLogicalHeight() {
         return height.logicalHeight();
+    }
+
+    public Optional<Integer> getCloudHeight(Optional<Integer> defaultHeight) {
+        return height.couldHeightFunc().apply(defaultHeight);
     }
 
     public ResourceKey getResourceKey() {

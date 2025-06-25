@@ -1,10 +1,7 @@
 package io.github.lumine1909.customworldheight;
 
 import io.github.lumine1909.customworldheight.config.LevelConfig;
-import io.github.lumine1909.customworldheight.data.DataHandler;
-import io.github.lumine1909.customworldheight.data.DataHandler_1_20_5;
-import io.github.lumine1909.customworldheight.data.DataHandler_1_21;
-import io.github.lumine1909.customworldheight.data.DataHandler_1_21_3;
+import io.github.lumine1909.customworldheight.data.*;
 import io.github.lumine1909.customworldheight.metrics.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -47,7 +44,9 @@ public class CustomWorldHeight extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         int version = obtainVersion();
-        if (version >= 2103) {
+        if (version >= 2106) {
+            dataHandler = new DataHandler_1_21_6();
+        } else if (version >= 2103) {
             dataHandler = new DataHandler_1_21_3();
         } else if (version >= 2100) {
             dataHandler = new DataHandler_1_21();

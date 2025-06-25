@@ -1,5 +1,6 @@
 dependencies {
     implementation(project(":core"))
+    implementation(project(":nms:nms_1_21_6"))
     implementation(project(":nms:nms_1_21_3"))
     implementation(project(":nms:nms_1_21"))
     implementation(project(":nms:nms_1_20_5"))
@@ -11,7 +12,7 @@ tasks {
         dependsOn(shadowJar)
     }
     shadowJar {
-        archiveFileName.set("CustomWorldHeight-${version}-MC-1.20.5-1.21.5.jar")
+        archiveFileName.set("CustomWorldHeight-${version}-MC-1.20.5-1.21.6.jar")
         minimize()
     }
     withType<JavaCompile> {
