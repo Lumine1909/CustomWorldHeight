@@ -12,7 +12,7 @@ tasks {
         dependsOn(shadowJar)
     }
     shadowJar {
-        archiveFileName.set("CustomWorldHeight-${version}-MC-1.20.5-1.21.6.jar")
+        archiveFileName.set("CustomWorldHeight-${version}-MC-1.20.5-1.21.7.jar")
         minimize()
     }
     withType<JavaCompile> {
