@@ -1,4 +1,4 @@
-name: $name
+name: CustomWorldHeight
 version: $version
 main: io.github.lumine1909.customworldheight.CustomWorldHeight
 api-version: $apiVersion

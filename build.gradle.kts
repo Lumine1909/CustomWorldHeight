@@ -3,14 +3,66 @@ plugins {
     id("com.gradleup.shadow")
 }
 
-allprojects {
-    plugins.apply("java")
-    plugins.apply("com.gradleup.shadow")
-    //plugins.apply("io.papermc.paperweight.userdev")
+group = "io.github.lumine1909"
+version = "1.5.2"
+description = "A plugin that allows you modify world's height"
 
-    group = "io.github.lumine1909"
-    version = "1.5.2"
-    description = "A plugin that allows you modify world's height"
+repositories {
+    mavenCentral()
+    gradlePluginPortal()
+    maven("https://repo.papermc.io/repository/maven-public/")
+}
+
+dependencies {
+    implementation(project(":plugin"))
+    implementation(project(":core"))
+
+    implementation(project(":nms:nms_1_20_5"))
+    implementation(project(":nms:nms_1_21"))
+    implementation(project(":nms:nms_1_21_3"))
+    implementation(project(":nms:nms_1_21_6"))
+}
+
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+}
+
+tasks {
+    shadowJar {
+        archiveVersion.set(version.toString())
+        archiveFileName.set("CustomWorldHeight-${version}-MC-1.20.5-1.21.10.jar")
+        archiveClassifier.set("")
+        mergeServiceFiles()
+
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+        subprojects.forEach { sub ->
+            dependsOn(sub.tasks.jar)
+            from(sub.tasks.jar.flatMap { it.archiveFile }.map { zipTree(it) })
+        }
+    }
+    assemble {
+        dependsOn(shadowJar)
+    }
+    project(":plugin") {
+        tasks.withType<ProcessResources> {
+            filteringCharset = Charsets.UTF_8.name()
+            val props = mapOf(
+                "version" to rootProject.version,
+                "description" to rootProject.description,
+                "apiVersion" to "1.20"
+            )
+            inputs.properties(props)
+            filesMatching("plugin.yml") {
+                expand(props)
+            }
+        }
+    }
+}
+
+subprojects {
+    plugins.apply("java")
 
     repositories {
         mavenCentral()
