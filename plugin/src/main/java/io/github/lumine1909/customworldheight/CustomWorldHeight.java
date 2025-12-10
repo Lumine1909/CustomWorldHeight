@@ -44,7 +44,9 @@ public class CustomWorldHeight extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         int version = obtainVersion();
-        if (version >= 2106) {
+        if (version >= 2111) {
+            dataHandler = new DataHandler_1_21_11();
+        } else if (version >= 2106) {
             dataHandler = new DataHandler_1_21_6();
         } else if (version >= 2103) {
             dataHandler = new DataHandler_1_21_3();

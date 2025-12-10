@@ -26,13 +26,13 @@ public class LevelConfig {
             int logicalHeight = config.getInt(key + ".logical-height", 256);
             String cloudHeight = config.getString(key + ".cloud-height", "empty");
             String dimension = config.getString(key + ".dimension-type", "custom");
-            Function<Optional<Integer>, Optional<Integer>> cloudHeightFunc = switch (cloudHeight) {
+            Function<Optional<Float>, Optional<Float>> cloudHeightFunc = switch (cloudHeight) {
                 case "empty" -> v -> Optional.empty();
                 case "default" -> Function.identity();
                 default -> {
                     try {
-                        int r = Integer.parseInt(cloudHeight);
-                        yield t -> Optional.of(r);
+                        float f = Float.parseFloat(cloudHeight);
+                        yield t -> Optional.of(f);
                     } catch (NumberFormatException ignored) {
                     }
                     yield Function.identity();

@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "io.github.lumine1909"
-version = "1.5.2"
+version = "1.6.0-rc1"
 description = "A plugin that allows you modify world's height"
 
 repositories {
@@ -21,6 +21,7 @@ dependencies {
     implementation(project(":nms:nms_1_21"))
     implementation(project(":nms:nms_1_21_3"))
     implementation(project(":nms:nms_1_21_6"))
+    implementation(project(":nms:nms_1_21_11"))
 }
 
 
@@ -31,7 +32,7 @@ java {
 tasks {
     shadowJar {
         archiveVersion.set(version.toString())
-        archiveFileName.set("CustomWorldHeight-${version}-MC-1.20.5-1.21.10.jar")
+        archiveFileName.set("CustomWorldHeight-${version}-MC-1.20.5-1.21.11.jar")
         archiveClassifier.set("")
         mergeServiceFiles()
 

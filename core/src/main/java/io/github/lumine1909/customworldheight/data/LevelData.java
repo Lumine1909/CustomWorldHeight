@@ -41,8 +41,12 @@ public class LevelData<DimensionType, ResourceKey, Holder> {
         return height.logicalHeight();
     }
 
-    public Optional<Integer> getCloudHeight(Optional<Integer> defaultHeight) {
-        return height.couldHeightFunc().apply(defaultHeight);
+    public Float computeCloudHeight(float defaultHeight) {
+        return height.couldHeightFunc().apply(Optional.of(defaultHeight)).orElse(defaultHeight);
+    }
+
+    public Optional<Integer> computeCloudHeightInteger(Optional<Integer> defaultHeight) {
+        return height.couldHeightFunc().apply(defaultHeight.map(i -> (Float) (float) i)).map((Float::intValue));
     }
 
     public ResourceKey getResourceKey() {
