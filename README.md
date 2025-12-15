@@ -6,13 +6,13 @@
 
 > [!CAUTION]
 > 
-> This plugin is similar as the vanilla datapack, so there will be some issues as the datapack one.
+> This plugin is similar to the vanilla datapack, so there will be some similar issues as the datapack one.
 > 
-> One you set the height of a certain world, it will be VERY DANGEROUS to shirk the world height, all the data will lose.
+> Once you set the height of a certain world, it will be VERY DANGEROUS to shirk the world height, all the data will lose.
 > 
-> Expand the height is relatively unharmful, but if you decrease the min-Y, the generated chunk will have difference with the new.
+> Expand the height is relatively unharmful, but if you decrease the min-Y, new chunks will be different from already generated chunks.
 > 
-> Only increase the height will only cause re-calculate chunk's height map, all the data will be properly preserved.
+> Increasing the height will only cause the chunk's height map to be recalculated, and all the data will be properly preserved.
 
 
 ## Features
