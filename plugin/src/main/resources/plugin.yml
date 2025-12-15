@@ -3,6 +3,7 @@ version: $version
 main: io.github.lumine1909.customworldheight.CustomWorldHeight
 api-version: $apiVersion
 description: $description
+folia-supported: true
 load: STARTUP
 authors:
   - Lumine1909
