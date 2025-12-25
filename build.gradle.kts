@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "io.github.lumine1909"
-version = "1.6.0-rc1"
+version = "1.6.0"
 description = "A plugin that allows you modify world's height"
 
 repositories {
