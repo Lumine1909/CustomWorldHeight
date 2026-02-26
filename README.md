@@ -33,7 +33,7 @@ Follow these steps to install the plugin:
 ## Configuration
 
 ```yaml
-# You can set to anything you want, will be used to generate ResourceLocation
+# You can set to anything you want, will be used to generate Identifier (ResourceLocation)
 example-namespace:
 
   # Set the name for certain world
@@ -55,7 +55,7 @@ example-namespace:
   # This will let the plugin process registration data when world load
   dimension-type: 'custom'
 
-# You can set to anything you want, will be used to generate ResourceLocation
+# You can set to anything you want, will be used to generate Identifier (ResourceLocation)
 example-regex:
 
   # This plugin also support Regex matching

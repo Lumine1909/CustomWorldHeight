@@ -1,0 +1,13 @@
+[versions]
+paperweight = "2.0.0-beta.19"
+shadow = "9.3.1"
+paper-api = "1.20.4-R0.1-SNAPSHOT"
+reflexion = "3.1.0"
+
+[plugins]
+paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight" }
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
+
+[libraries]
+paper-api = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper-api" }
+reflexion = { group = "io.github.lumine1909", name = "reflexion", version.ref = "reflexion" }
