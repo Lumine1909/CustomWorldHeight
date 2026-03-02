@@ -46,8 +46,8 @@ public class LevelData<DimensionType, ResourceKey, Holder> {
         return height.logicalHeight();
     }
 
-    public Float computeCloudHeight(float defaultHeight) {
-        return height.cloudHeight().get(Optional.of(defaultHeight)).orElse(defaultHeight);
+    public Optional<Float> computeCloudHeight(Float defaultHeight) {
+        return height.cloudHeight().get(Optional.ofNullable(defaultHeight));
     }
 
     public Optional<Integer> computeCloudHeightInteger(Optional<Integer> defaultHeight) {

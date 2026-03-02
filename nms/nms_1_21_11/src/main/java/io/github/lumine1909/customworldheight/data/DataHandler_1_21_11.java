@@ -65,16 +65,16 @@ public class DataHandler_1_21_11 implements DataHandler<DimensionType, Holder<@N
     @Override
     public void processData(LevelData<DimensionType, ResourceKey<@NotNull DimensionType>, Holder<@NotNull DimensionType>> data, Holder<@NotNull DimensionType> holder) {
         DimensionType old = holder.value();
-        Float originalCloudHeight = Objects.requireNonNull(old.attributes().get(EnvironmentAttributes.CLOUD_HEIGHT)).applyModifier(0f);
-        EnvironmentAttributeMap newAttributes = EnvironmentAttributeMap.builder()
-            .putAll(old.attributes())
-            .set(EnvironmentAttributes.CLOUD_HEIGHT, data.computeCloudHeight(originalCloudHeight))
-            .build();
+        EnvironmentAttributeMap.Entry<Float, ?> entry = old.attributes().get(EnvironmentAttributes.CLOUD_HEIGHT);
+        Float originalCloudHeight = entry == null ? null : entry.applyModifier(0f);
+        EnvironmentAttributeMap.Builder newAttributesBuilder = EnvironmentAttributeMap.builder()
+            .putAll(old.attributes());
+        data.computeCloudHeight(originalCloudHeight).ifPresent(value -> newAttributesBuilder.set(EnvironmentAttributes.CLOUD_HEIGHT, value));
         DimensionType newDimension = new DimensionType(
             old.hasFixedTime(), old.hasSkyLight(), old.hasCeiling(), old.coordinateScale(),
             data.getMinY(), data.getHeight(), data.getLogicalHeight(),
             old.infiniburn(), old.ambientLight(), old.monsterSettings(),
-            old.skybox(), old.cardinalLightType(), newAttributes, old.timelines()
+            old.skybox(), old.cardinalLightType(), newAttributesBuilder.build(), old.timelines()
         );
         ResourceKey<@NotNull DimensionType> newResourceKey = ResourceKey.create(Registries.DIMENSION_TYPE, Identifier.fromNamespaceAndPath(data.getId().namespace(), data.getId().value()));
         data.setDimensionType(newDimension);

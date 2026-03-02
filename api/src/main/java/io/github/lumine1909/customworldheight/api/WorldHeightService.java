@@ -6,7 +6,9 @@ import java.util.Objects;
 
 public interface WorldHeightService {
 
-    WorldHeightService INSTANCE = Objects.requireNonNull(Bukkit.getServicesManager().getRegistration(WorldHeightService.class)).getProvider();
+    static WorldHeightService get() {
+        return Objects.requireNonNull(Bukkit.getServicesManager().getRegistration(WorldHeightService.class)).getProvider();
+    }
 
     Height getHeight(Identifier id);
 
