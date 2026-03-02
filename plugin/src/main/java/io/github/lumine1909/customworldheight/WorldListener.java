@@ -1,5 +1,6 @@
 package io.github.lumine1909.customworldheight;
 
+import io.github.lumine1909.customworldheight.api.Identifier;
 import io.github.lumine1909.customworldheight.config.LevelConfig;
 import io.github.lumine1909.customworldheight.data.LevelData;
 import org.bukkit.World;
@@ -15,13 +16,13 @@ public class WorldListener implements Listener {
     @SuppressWarnings("unchecked")
     @EventHandler
     public void onWorldInit(WorldInitEvent e) {
-        String configKey;
+        Identifier identifier;
         World world = e.getWorld();
-        if ((configKey = LevelConfig.checkConfigData(world.getName())) == null) {
+        if ((identifier = LevelConfig.checkConfigData(world.getName())) == null) {
             return;
         }
         plugin.getLogger().info("Modifying world " + world.getName() + "'s height...");
-        LevelData<?, ?, ?> data = LevelConfig.getDataOrThrow(configKey);
+        LevelData<?, ?, ?> data = LevelConfig.getDataOrThrow(identifier);
         dataHandler.processWorld(world, data);
     }
 }

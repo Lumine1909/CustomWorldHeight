@@ -1,4 +1,5 @@
 dependencies {
+    implementation(project(":api"))
     implementation(project(":core"))
     implementation(project(":nms:nms_1_20_5"))
     implementation(project(":nms:nms_1_21"))

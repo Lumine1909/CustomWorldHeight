@@ -1,8 +1,8 @@
 # You can set to anything you want, will be used to generate Identifier (ResourceLocation)
 example-namespace:
 
-  # Set the name for certain world
-  world: 'example-world-name'
+  # Set the value for certain world
+  world: 'example-world-value'
 
   # Min Y position
   min-y: -64

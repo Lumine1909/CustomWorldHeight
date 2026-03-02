@@ -1,7 +1,8 @@
 package io.github.lumine1909.customworldheight.data;
 
-import io.github.lumine1909.customworldheight.config.BaseDimension;
-import io.github.lumine1909.customworldheight.config.Height;
+import io.github.lumine1909.customworldheight.api.BaseDimensionType;
+import io.github.lumine1909.customworldheight.api.Height;
+import io.github.lumine1909.customworldheight.api.Identifier;
 import org.bukkit.World;
 
 import java.util.Optional;
@@ -9,9 +10,9 @@ import java.util.function.Function;
 
 public class LevelData<DimensionType, ResourceKey, Holder> {
 
-    protected final String name;
-    protected Height height;
-    protected BaseDimension dimension;
+    protected final Identifier id;
+    protected final Height height;
+    protected final BaseDimensionType dimension;
 
     protected DimensionType dimensionType;
     protected ResourceKey resourceKey;
@@ -19,14 +20,18 @@ public class LevelData<DimensionType, ResourceKey, Holder> {
 
     protected Function<World, Holder> accessor;
 
-    public LevelData(String name, Height height, BaseDimension dimension) {
-        this.name = name;
+    public LevelData(Identifier id, Height height, BaseDimensionType dimension) {
+        this.id = id;
         this.height = height;
         this.dimension = dimension;
     }
 
-    public String getName() {
-        return name;
+    public Identifier getId() {
+        return id;
+    }
+
+    public Height getApiHeight() {
+        return height;
     }
 
     public int getHeight() {
@@ -42,11 +47,11 @@ public class LevelData<DimensionType, ResourceKey, Holder> {
     }
 
     public Float computeCloudHeight(float defaultHeight) {
-        return height.couldHeightFunc().apply(Optional.of(defaultHeight)).orElse(defaultHeight);
+        return height.cloudHeight().get(Optional.of(defaultHeight)).orElse(defaultHeight);
     }
 
     public Optional<Integer> computeCloudHeightInteger(Optional<Integer> defaultHeight) {
-        return height.couldHeightFunc().apply(defaultHeight.map(i -> (Float) (float) i)).map((Float::intValue));
+        return height.cloudHeight().get(defaultHeight.map(i -> (Float) (float) i)).map((Float::intValue));
     }
 
     public ResourceKey getResourceKey() {
