@@ -21,7 +21,7 @@ public interface WorldHeightService {
     void registerWorld(Identifier id, String name, Height height, BaseDimensionType dimensionType, boolean override);
 
     default void registerRegex(Identifier id, String regex, Height height, BaseDimensionType dimensionType) {
-        registerRegex(id, regex, height, dimensionType, true);
+        registerRegex(id, regex, height, dimensionType, false);
     }
 
     void registerRegex(Identifier id, String regex, Height height, BaseDimensionType dimensionType, boolean override);

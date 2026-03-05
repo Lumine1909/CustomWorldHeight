@@ -81,6 +81,7 @@ example-regex:
 ## License
 
 This project is licensed under the [GPL 3.0 License](LICENSE).
+The [API](api) part is licensed under the [LGPL 3.0 License](api/LICENSE).
 
 ## Support
 
