@@ -30,10 +30,42 @@ Follow these steps to install the plugin:
 3. After plugin generated the config template it will automatically disable, please finish the config.
 4. Restart your Minecraft server, and the configured world's height will be modified.
 
+## API Usage
+```kotlin
+repositories {
+    mavenCentral()
+}
+dependencies {
+    compileOnly("io.github.lumine1909:CustomWorldHeight-API:0.0.1")
+}
+```
+```java
+public void modifyHeight() {
+    /*
+    All of these works only if the world is not loaded yet!
+    This is not a permanent modification! If you want to set permanently,
+    store the height data with your plugin and SET IT ON EACH STARTUP!
+    */
+
+    // Set the height of overworld
+    WorldHeightService.get().registerWorld(
+        Identifier.of("demo", "height1"), "world",
+        new Height(1088, -64, 512, Height.CloudHeight.DEFAULT),
+        BaseDimensionType.OVERWORLD
+    );
+    // Set the height of all worlds start with "test_"
+    WorldHeightService.get().registerRegex(
+        Identifier.of("demo", "height2"), "test_\\w+",
+        new Height(1088, -64, 512, Height.CloudHeight.DEFAULT),
+        BaseDimensionType.CUSTOM
+    );
+}
+```
+
 ## Configuration
 
 ```yaml
-# You can set to anything you want, will be used to generate ResourceLocation
+# You can set to anything you want, will be used to generate Identifier (ResourceLocation)
 example-namespace:
 
   # Set the name for certain world
@@ -55,7 +87,7 @@ example-namespace:
   # This will let the plugin process registration data when world load
   dimension-type: 'custom'
 
-# You can set to anything you want, will be used to generate ResourceLocation
+# You can set to anything you want, will be used to generate Identifier (ResourceLocation)
 example-regex:
 
   # This plugin also support Regex matching
@@ -81,6 +113,7 @@ example-regex:
 ## License
 
 This project is licensed under the [GPL 3.0 License](LICENSE).
+The [API](api) part is licensed under the [LGPL 3.0 License](api/LICENSE).
 
 ## Support
 

@@ -2,8 +2,9 @@ package io.github.lumine1909.customworldheight.data;
 
 import ca.spottedleaf.moonrise.patches.chunk_system.level.entity.EntityLookup;
 import ca.spottedleaf.moonrise.patches.starlight.light.StarLightInterface;
-import io.github.lumine1909.customworldheight.config.BaseDimension;
-import io.github.lumine1909.customworldheight.config.Height;
+import io.github.lumine1909.customworldheight.api.BaseDimensionType;
+import io.github.lumine1909.customworldheight.api.Height;
+import io.github.lumine1909.customworldheight.api.Identifier;
 import net.minecraft.core.Holder;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.RegistrationInfo;
@@ -44,8 +45,8 @@ public class DataHandler_1_21 implements DataHandler<DimensionType, Holder<Dimen
     }
 
     @Override
-    public LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> createData(String name, Height height, BaseDimension dimension) {
-        LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> levelData = new LevelData_1_21(name, height, dimension);
+    public LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> createData(Identifier id, Height height, BaseDimensionType dimension) {
+        LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> levelData = new LevelData_1_21(id, height, dimension);
         switch (dimension) {
             case OVERWORLD -> processData(levelData, REGISTRY.getHolderOrThrow(BuiltinDimensionTypes.OVERWORLD));
             case NETHER -> processData(levelData, REGISTRY.getHolderOrThrow(BuiltinDimensionTypes.NETHER));
@@ -70,7 +71,7 @@ public class DataHandler_1_21 implements DataHandler<DimensionType, Holder<Dimen
             old.infiniburn(), old.effectsLocation(),
             old.ambientLight(), old.monsterSettings()
         );
-        ResourceKey<DimensionType> newResourceKey = ResourceKey.create(Registries.DIMENSION_TYPE, ResourceLocation.fromNamespaceAndPath("customworldheight", data.getName()));
+        ResourceKey<DimensionType> newResourceKey = ResourceKey.create(Registries.DIMENSION_TYPE, ResourceLocation.fromNamespaceAndPath(data.getId().namespace(), data.getId().value()));
         data.setDimensionType(newDimension);
         data.setResourceKey(newResourceKey);
         Holder<DimensionType> newHolder = register(data.getDimensionType(), data.getResourceKey());

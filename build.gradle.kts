@@ -1,10 +1,10 @@
 plugins {
     java
-    id("com.gradleup.shadow")
+    alias(libs.plugins.shadow)
 }
 
 group = "io.github.lumine1909"
-version = "1.6.0"
+version = "2.0.0"
 description = "A plugin that allows you modify world's height"
 
 repositories {
@@ -14,8 +14,9 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":plugin"))
+    implementation(project(":api"))
     implementation(project(":core"))
+    implementation(project(":plugin"))
 
     implementation(project(":nms:nms_1_20_5"))
     implementation(project(":nms:nms_1_21"))

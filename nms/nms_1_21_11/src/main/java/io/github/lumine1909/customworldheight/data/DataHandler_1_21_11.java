@@ -1,8 +1,8 @@
 package io.github.lumine1909.customworldheight.data;
 
 import ca.spottedleaf.moonrise.patches.starlight.light.StarLightInterface;
-import io.github.lumine1909.customworldheight.config.BaseDimension;
-import io.github.lumine1909.customworldheight.config.Height;
+import io.github.lumine1909.customworldheight.api.BaseDimensionType;
+import io.github.lumine1909.customworldheight.api.Height;
 import net.minecraft.core.Holder;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.RegistrationInfo;
@@ -21,7 +21,6 @@ import org.bukkit.craftbukkit.CraftWorld;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.IdentityHashMap;
-import java.util.Objects;
 
 import static io.github.lumine1909.customworldheight.util.ReflectionUtil.set;
 
@@ -47,8 +46,8 @@ public class DataHandler_1_21_11 implements DataHandler<DimensionType, Holder<@N
     }
 
     @Override
-    public LevelData<DimensionType, ResourceKey<@NotNull DimensionType>, Holder<@NotNull DimensionType>> createData(String name, Height height, BaseDimension dimension) {
-        LevelData<DimensionType, ResourceKey<@NotNull DimensionType>, Holder<@NotNull DimensionType>> levelData = new LevelData_1_21_11(name, height, dimension);
+    public LevelData<DimensionType, ResourceKey<@NotNull DimensionType>, Holder<@NotNull DimensionType>> createData(io.github.lumine1909.customworldheight.api.Identifier id, Height height, BaseDimensionType dimension) {
+        LevelData<DimensionType, ResourceKey<@NotNull DimensionType>, Holder<@NotNull DimensionType>> levelData = new LevelData_1_21_11(id, height, dimension);
         switch (dimension) {
             case OVERWORLD -> processData(levelData, REGISTRY.getOrThrow(BuiltinDimensionTypes.OVERWORLD));
             case NETHER -> processData(levelData, REGISTRY.getOrThrow(BuiltinDimensionTypes.NETHER));
@@ -65,18 +64,18 @@ public class DataHandler_1_21_11 implements DataHandler<DimensionType, Holder<@N
     @Override
     public void processData(LevelData<DimensionType, ResourceKey<@NotNull DimensionType>, Holder<@NotNull DimensionType>> data, Holder<@NotNull DimensionType> holder) {
         DimensionType old = holder.value();
-        Float originalCloudHeight = Objects.requireNonNull(old.attributes().get(EnvironmentAttributes.CLOUD_HEIGHT)).applyModifier(0f);
-        EnvironmentAttributeMap newAttributes = EnvironmentAttributeMap.builder()
-            .putAll(old.attributes())
-            .set(EnvironmentAttributes.CLOUD_HEIGHT, data.computeCloudHeight(originalCloudHeight))
-            .build();
+        EnvironmentAttributeMap.Entry<Float, ?> entry = old.attributes().get(EnvironmentAttributes.CLOUD_HEIGHT);
+        Float originalCloudHeight = entry == null ? null : entry.applyModifier(0f);
+        EnvironmentAttributeMap.Builder newAttributesBuilder = EnvironmentAttributeMap.builder()
+            .putAll(old.attributes());
+        data.computeCloudHeight(originalCloudHeight).ifPresent(value -> newAttributesBuilder.set(EnvironmentAttributes.CLOUD_HEIGHT, value));
         DimensionType newDimension = new DimensionType(
             old.hasFixedTime(), old.hasSkyLight(), old.hasCeiling(), old.coordinateScale(),
             data.getMinY(), data.getHeight(), data.getLogicalHeight(),
             old.infiniburn(), old.ambientLight(), old.monsterSettings(),
-            old.skybox(), old.cardinalLightType(), newAttributes, old.timelines()
+            old.skybox(), old.cardinalLightType(), newAttributesBuilder.build(), old.timelines()
         );
-        ResourceKey<@NotNull DimensionType> newResourceKey = ResourceKey.create(Registries.DIMENSION_TYPE, Identifier.fromNamespaceAndPath("customworldheight", data.getName()));
+        ResourceKey<@NotNull DimensionType> newResourceKey = ResourceKey.create(Registries.DIMENSION_TYPE, Identifier.fromNamespaceAndPath(data.getId().namespace(), data.getId().value()));
         data.setDimensionType(newDimension);
         data.setResourceKey(newResourceKey);
         Holder<@NotNull DimensionType> newHolder = register(data.getDimensionType(), data.getResourceKey());

@@ -1,5 +1,6 @@
 package io.github.lumine1909.customworldheight;
 
+import io.github.lumine1909.customworldheight.api.WorldHeightService;
 import io.github.lumine1909.customworldheight.config.LevelConfig;
 import io.github.lumine1909.customworldheight.data.*;
 import io.github.lumine1909.customworldheight.metrics.Metrics;
@@ -7,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerLoadEvent;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -15,6 +17,7 @@ import java.io.File;
 public class CustomWorldHeight extends JavaPlugin implements Listener {
 
     public static CustomWorldHeight plugin;
+    public static LevelConfig levelConfig;
     public static DataHandler dataHandler;
 
     public static int obtainVersion() {
@@ -57,7 +60,8 @@ public class CustomWorldHeight extends JavaPlugin implements Listener {
         } else {
             throw new RuntimeException("Unsupported version: " + version);
         }
-        LevelConfig.readData(getConfig());
+        levelConfig = new LevelConfig(getConfig());
+        Bukkit.getServicesManager().register(WorldHeightService.class, levelConfig, this, ServicePriority.Normal);
         Bukkit.getPluginManager().registerEvents(new WorldListener(), this);
         Bukkit.getPluginManager().registerEvents(this, this);
         new Metrics(this, 26056);

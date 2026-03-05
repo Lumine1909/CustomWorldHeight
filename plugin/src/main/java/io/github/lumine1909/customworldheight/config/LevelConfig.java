@@ -1,70 +1,107 @@
 package io.github.lumine1909.customworldheight.config;
 
+import io.github.lumine1909.customworldheight.api.BaseDimensionType;
+import io.github.lumine1909.customworldheight.api.Height;
+import io.github.lumine1909.customworldheight.api.Identifier;
+import io.github.lumine1909.customworldheight.api.WorldHeightService;
 import io.github.lumine1909.customworldheight.data.LevelData;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.TreeMap;
 
 import static io.github.lumine1909.customworldheight.CustomWorldHeight.dataHandler;
 import static io.github.lumine1909.customworldheight.CustomWorldHeight.plugin;
 
-public class LevelConfig {
+public class LevelConfig implements WorldHeightService {
 
-    private static final Map<String, String> WORLD_NAME_MAP = new HashMap<>();
-    private static final Map<String, String> WORLD_REGEX_MAP = new TreeMap<>();
-    private static final Map<String, LevelData<?, ?, ?>> CACHED_DATA = new HashMap<>();
+    private static final Map<String, Identifier> WORLD_NAME_MAP = new HashMap<>();
+    private static final Map<String, Identifier> WORLD_REGEX_MAP = new TreeMap<>();
+    private static final Map<Identifier, LevelData<?, ?, ?>> CACHED_DATA = new HashMap<>();
 
-    public static void readData(FileConfiguration config) {
-        WORLD_NAME_MAP.clear();
-        WORLD_REGEX_MAP.clear();
-        for (String key : config.getKeys(false)) {
-            String name = config.getString(key + ".world", null);
-            String regex = config.getString(key + ".regex", "\\w\\b\\w"); // Don't match anything
-            int height = config.getInt(key + ".height", 384);
-            int minY = config.getInt(key + ".min-y", -64);
-            int logicalHeight = config.getInt(key + ".logical-height", 256);
-            String cloudHeight = config.getString(key + ".cloud-height", "empty");
-            String dimension = config.getString(key + ".dimension-type", "custom");
-            Function<Optional<Float>, Optional<Float>> cloudHeightFunc = switch (cloudHeight) {
-                case "empty" -> v -> Optional.empty();
-                case "default" -> Function.identity();
-                default -> {
-                    try {
-                        float f = Float.parseFloat(cloudHeight);
-                        yield t -> Optional.of(f);
-                    } catch (NumberFormatException ignored) {
-                    }
-                    yield Function.identity();
-                }
-            };
-            plugin.getSLF4JLogger().info(
-                "Loaded config: name={}, regex={}, height={}, minY={}, logicalHeight={}, dimension={}, couldHeight={}",
-                name, regex, height, minY, logicalHeight, dimension, cloudHeight
-            );
-            Height h = new Height(height, minY, logicalHeight, cloudHeightFunc);
-            if (name != null) {
-                WORLD_NAME_MAP.put(name, key);
-            } else {
-                WORLD_REGEX_MAP.put(regex, key);
-            }
-            CACHED_DATA.put(key, dataHandler.createData(key, h, BaseDimension.getByName(dimension)));
-        }
+    public LevelConfig(FileConfiguration config) {
+        readData(config);
     }
 
-    public static LevelData<?, ?, ?> getDataOrThrow(String key) {
-        return Objects.requireNonNull(CACHED_DATA.get(key));
+    public static LevelData<?, ?, ?> getDataOrThrow(Identifier id) {
+        return Objects.requireNonNull(CACHED_DATA.get(id));
     }
 
-    public static String checkConfigData(String worldName) {
+    public static Identifier checkConfigData(String worldName) {
         if (WORLD_NAME_MAP.containsKey(worldName)) {
             return WORLD_NAME_MAP.get(worldName);
         }
-        for (Map.Entry<String, String> entry : WORLD_REGEX_MAP.entrySet()) {
+        for (Map.Entry<String, Identifier> entry : WORLD_REGEX_MAP.entrySet()) {
             if (worldName.matches(entry.getKey())) {
                 return entry.getValue();
             }
         }
         return null;
+    }
+
+    public void readData(FileConfiguration config) {
+        WORLD_NAME_MAP.clear();
+        WORLD_REGEX_MAP.clear();
+        for (String key : config.getKeys(false)) {
+            Identifier id = Identifier.of("customworldheight", key);
+            String name = config.getString(key + ".world", null);
+            String regex = config.getString(key + ".regex", "\\w\\b\\w"); // Don't match anything
+            int height = config.getInt(key + ".height", 384);
+            int minY = config.getInt(key + ".min-y", -64);
+            int logicalHeight = config.getInt(key + ".logical-height", 256);
+            String cloudHeightStr = config.getString(key + ".cloud-height", "empty");
+            String dimension = config.getString(key + ".dimension-type", "custom");
+            Height.CloudHeight cloudHeight = switch (cloudHeightStr) {
+                case "empty" -> Height.CloudHeight.EMPTY;
+                case "default" -> Height.CloudHeight.DEFAULT;
+                default -> {
+                    try {
+                        float f = Float.parseFloat(cloudHeightStr);
+                        yield Height.CloudHeight.height(f);
+                    } catch (NumberFormatException ignored) {
+                    }
+                    yield Height.CloudHeight.DEFAULT;
+                }
+            };
+            plugin.getSLF4JLogger().info(
+                "Loaded config: value={}, regex={}, height={}, minY={}, logicalHeight={}, dimension={}, couldHeight={}",
+                name, regex, height, minY, logicalHeight, dimension, cloudHeightStr
+            );
+            Height h = new Height(height, minY, logicalHeight, cloudHeight);
+            register(id, name, regex, h, BaseDimensionType.getByName(dimension), false);
+        }
+    }
+
+    @Override
+    public Height getHeight(Identifier id) {
+        return getDataOrThrow(id).getApiHeight();
+    }
+
+    @Override
+    public void removeHeight(Identifier id) {
+        CACHED_DATA.remove(id);
+    }
+
+    @Override
+    public void registerWorld(Identifier id, String name, Height height, BaseDimensionType dimensionType, boolean override) {
+        register(id, name, null, height, dimensionType, override);
+    }
+
+    @Override
+    public void registerRegex(Identifier id, String regex, Height height, BaseDimensionType dimensionType, boolean override) {
+        register(id, null, regex, height, dimensionType, override);
+    }
+
+    private void register(Identifier id, String name, String regex, Height height, BaseDimensionType dimensionType, boolean override) {
+        if (name != null) {
+            WORLD_NAME_MAP.put(name, id);
+        } else {
+            WORLD_REGEX_MAP.put(regex, id);
+        }
+        if (override || !CACHED_DATA.containsKey(id)) {
+            CACHED_DATA.put(id, dataHandler.createData(id, height, dimensionType));
+        }
     }
 }
