@@ -21,7 +21,6 @@ import org.bukkit.craftbukkit.CraftWorld;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.IdentityHashMap;
-import java.util.Objects;
 
 import static io.github.lumine1909.customworldheight.util.ReflectionUtil.set;
 

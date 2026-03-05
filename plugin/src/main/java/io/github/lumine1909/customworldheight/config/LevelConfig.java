@@ -25,6 +25,22 @@ public class LevelConfig implements WorldHeightService {
         readData(config);
     }
 
+    public static LevelData<?, ?, ?> getDataOrThrow(Identifier id) {
+        return Objects.requireNonNull(CACHED_DATA.get(id));
+    }
+
+    public static Identifier checkConfigData(String worldName) {
+        if (WORLD_NAME_MAP.containsKey(worldName)) {
+            return WORLD_NAME_MAP.get(worldName);
+        }
+        for (Map.Entry<String, Identifier> entry : WORLD_REGEX_MAP.entrySet()) {
+            if (worldName.matches(entry.getKey())) {
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
+
     public void readData(FileConfiguration config) {
         WORLD_NAME_MAP.clear();
         WORLD_REGEX_MAP.clear();
@@ -56,22 +72,6 @@ public class LevelConfig implements WorldHeightService {
             Height h = new Height(height, minY, logicalHeight, cloudHeight);
             register(id, name, regex, h, BaseDimensionType.getByName(dimension), false);
         }
-    }
-
-    public static LevelData<?, ?, ?> getDataOrThrow(Identifier id) {
-        return Objects.requireNonNull(CACHED_DATA.get(id));
-    }
-
-    public static Identifier checkConfigData(String worldName) {
-        if (WORLD_NAME_MAP.containsKey(worldName)) {
-            return WORLD_NAME_MAP.get(worldName);
-        }
-        for (Map.Entry<String, Identifier> entry : WORLD_REGEX_MAP.entrySet()) {
-            if (worldName.matches(entry.getKey())) {
-                return entry.getValue();
-            }
-        }
-        return null;
     }
 
     @Override
