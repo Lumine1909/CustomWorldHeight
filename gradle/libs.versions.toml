@@ -3,7 +3,7 @@ paperweight = "2.0.0-beta.19"
 shadow = "9.3.1"
 publish = "0.34.0"
 paper-api = "1.20.4-R0.1-SNAPSHOT"
-reflexion = "3.1.0"
+reflexion = "0.3.1"
 
 [plugins]
 paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight" }
