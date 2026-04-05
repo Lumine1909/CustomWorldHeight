@@ -6,7 +6,6 @@ import io.github.lumine1909.customworldheight.api.Identifier;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.dimension.DimensionType;
-import org.jetbrains.annotations.NotNull;
 
 public class LevelData_26_1 extends LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> {
 
