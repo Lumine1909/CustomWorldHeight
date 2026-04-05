@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "io.github.lumine1909"
-version = "2.1.0-SNAPSHOT"
+version = "2.1.0"
 description = "A plugin that allows you modify world's height"
 
 repositories {
@@ -72,7 +72,7 @@ modrinth {
     projectId.set("customworldheight")
     versionNumber.set(version as String)
     versionName.set("CustomWorldHeight $version")
-    versionType.set("beta")
+    versionType.set("release")
     uploadFile.set(tasks.shadowJar)
     loaders.addAll("bukkit", "paper", "purpur", "folia")
 
