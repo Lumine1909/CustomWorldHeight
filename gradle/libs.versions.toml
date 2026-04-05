@@ -1,14 +1,16 @@
 [versions]
-paperweight = "2.0.0-beta.19"
-shadow = "9.3.1"
+paperweight = "2.0.0-beta.21"
+shadow = "9.4.0"
 publish = "0.34.0"
 paper-api = "1.20.4-R0.1-SNAPSHOT"
 reflexion = "0.3.2"
+minotaur = "2.+"
 
 [plugins]
 paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight" }
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
 publish = { id = "com.vanniktech.maven.publish", version.ref = "publish" }
+minotaur = { id = "com.modrinth.minotaur", version.ref = "minotaur" }
 
 [libraries]
 paper-api = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper-api" }

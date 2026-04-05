@@ -23,7 +23,7 @@ import java.util.IdentityHashMap;
 
 import static io.github.lumine1909.customworldheight.util.ReflectionUtil.set;
 
-public class DataHandler_1_21_11 implements DataHandler<DimensionType, Holder<DimensionType>, ResourceKey<DimensionType>> {
+public class DataHandler_26_1 implements DataHandler<DimensionType, Holder<DimensionType>, ResourceKey<DimensionType>> {
 
     private static final MappedRegistry<DimensionType> REGISTRY = (MappedRegistry<DimensionType>) MinecraftServer.getServer().registryAccess().lookup(Registries.DIMENSION_TYPE).orElseThrow();
 
@@ -46,7 +46,7 @@ public class DataHandler_1_21_11 implements DataHandler<DimensionType, Holder<Di
 
     @Override
     public LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> createData(io.github.lumine1909.customworldheight.api.Identifier id, Height height, BaseDimensionType dimension) {
-        LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> levelData = new LevelData_1_21_11(id, height, dimension);
+        LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> levelData = new LevelData_26_1(id, height, dimension);
         switch (dimension) {
             case OVERWORLD -> processData(levelData, REGISTRY.getOrThrow(BuiltinDimensionTypes.OVERWORLD));
             case NETHER -> processData(levelData, REGISTRY.getOrThrow(BuiltinDimensionTypes.NETHER));
@@ -69,10 +69,10 @@ public class DataHandler_1_21_11 implements DataHandler<DimensionType, Holder<Di
             .putAll(old.attributes());
         data.computeCloudHeight(originalCloudHeight).ifPresent(value -> newAttributesBuilder.set(EnvironmentAttributes.CLOUD_HEIGHT, value));
         DimensionType newDimension = new DimensionType(
-            old.hasFixedTime(), old.hasSkyLight(), old.hasCeiling(), old.coordinateScale(),
+            old.hasFixedTime(), old.hasSkyLight(), old.hasCeiling(), old.hasEnderDragonFight(), old.coordinateScale(),
             data.getMinY(), data.getHeight(), data.getLogicalHeight(),
             old.infiniburn(), old.ambientLight(), old.monsterSettings(),
-            old.skybox(), old.cardinalLightType(), newAttributesBuilder.build(), old.timelines()
+            old.skybox(), old.cardinalLightType(), newAttributesBuilder.build(), old.timelines(), old.defaultClock()
         );
         ResourceKey<DimensionType> newResourceKey = ResourceKey.create(Registries.DIMENSION_TYPE, Identifier.fromNamespaceAndPath(data.getId().namespace(), data.getId().value()));
         data.setDimensionType(newDimension);
