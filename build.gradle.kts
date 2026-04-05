@@ -23,17 +23,18 @@ dependencies {
     implementation(project(":nms:nms_1_21_3"))
     implementation(project(":nms:nms_1_21_6"))
     implementation(project(":nms:nms_1_21_11"))
+    implementation(project(":nms:nms_26_1"))
 }
 
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(25))
 }
 
 tasks {
     shadowJar {
         archiveVersion.set(version.toString())
-        archiveFileName.set("CustomWorldHeight-${version}-MC-1.20.5-1.21.11.jar")
+        archiveFileName.set("CustomWorldHeight-${version}+1.20.5-26.1.1.jar")
         archiveClassifier.set("")
         mergeServiceFiles()
 
@@ -73,6 +74,6 @@ subprojects {
     }
 
     java {
-        toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+        toolchain.languageVersion.set(JavaLanguageVersion.of(25))
     }
 }

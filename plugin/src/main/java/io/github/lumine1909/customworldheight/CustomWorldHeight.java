@@ -24,9 +24,13 @@ public class CustomWorldHeight extends JavaPlugin implements Listener {
         try {
             String[] versions = Bukkit.getMinecraftVersion().split("\\.");
             if (versions.length == 2) {
-                return Integer.parseInt(versions[1]) * 100;
+                return versions[0].equals("1")
+                    ? Integer.parseInt(versions[1]) * 100
+                    : Integer.parseInt(versions[0]) * 100 + Integer.parseInt(versions[1]);
             } else if (versions.length == 3) {
-                return Integer.parseInt(versions[1]) * 100 + Integer.parseInt(versions[2]);
+                return versions[0].equals("1") ?
+                    Integer.parseInt(versions[1]) * 100 + Integer.parseInt(versions[2])
+                    :  Integer.parseInt(versions[0]) * 100 + Integer.parseInt(versions[1]) * 10 + Integer.parseInt(versions[2]);
             }
         } catch (Exception ignored) {
         }

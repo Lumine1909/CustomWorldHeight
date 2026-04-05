@@ -6,5 +6,6 @@ dependencies {
     implementation(project(":nms:nms_1_21_3"))
     implementation(project(":nms:nms_1_21_6"))
     implementation(project(":nms:nms_1_21_11"))
+    implementation(project(":nms:nms_26_1"))
     compileOnly(libs.paper.api)
 }

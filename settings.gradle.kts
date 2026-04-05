@@ -8,6 +8,8 @@ include(":nms:nms_1_21")
 include(":nms:nms_1_21_3")
 include(":nms:nms_1_21_6")
 include(":nms:nms_1_21_11")
+include(":nms:nms_26_1")
+
 pluginManagement {
     pluginManagement {
         repositories {
