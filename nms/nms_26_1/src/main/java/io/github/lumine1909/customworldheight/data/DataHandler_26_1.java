@@ -18,15 +18,14 @@ import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.CraftWorld;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.IdentityHashMap;
 
 import static io.github.lumine1909.customworldheight.util.ReflectionUtil.set;
 
-public class DataHandler_26_1 implements DataHandler<DimensionType, Holder<@NotNull DimensionType>, ResourceKey<@NotNull DimensionType>> {
+public class DataHandler_26_1 implements DataHandler<DimensionType, Holder<DimensionType>, ResourceKey<DimensionType>> {
 
-    private static final MappedRegistry<@NotNull DimensionType> REGISTRY = (MappedRegistry<@NotNull DimensionType>) MinecraftServer.getServer().registryAccess().lookup(Registries.DIMENSION_TYPE).orElseThrow();
+    private static final MappedRegistry<DimensionType> REGISTRY = (MappedRegistry<DimensionType>) MinecraftServer.getServer().registryAccess().lookup(Registries.DIMENSION_TYPE).orElseThrow();
 
     @Override
     public DimensionType getDimensionType(World world) {
@@ -35,19 +34,19 @@ public class DataHandler_26_1 implements DataHandler<DimensionType, Holder<@NotN
     }
 
     @Override
-    public ResourceKey<@NotNull DimensionType> getResourceKey(World world) {
+    public ResourceKey<DimensionType> getResourceKey(World world) {
         return getHolder(world).unwrapKey().orElseThrow();
     }
 
     @Override
-    public Holder<@NotNull DimensionType> getHolder(World world) {
+    public Holder<DimensionType> getHolder(World world) {
         ServerLevel level = ((CraftWorld) world).getHandle();
         return level.dimensionTypeRegistration();
     }
 
     @Override
-    public LevelData<DimensionType, ResourceKey<@NotNull DimensionType>, Holder<@NotNull DimensionType>> createData(io.github.lumine1909.customworldheight.api.Identifier id, Height height, BaseDimensionType dimension) {
-        LevelData<DimensionType, ResourceKey<@NotNull DimensionType>, Holder<@NotNull DimensionType>> levelData = new LevelData_26_1(id, height, dimension);
+    public LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> createData(io.github.lumine1909.customworldheight.api.Identifier id, Height height, BaseDimensionType dimension) {
+        LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> levelData = new LevelData_26_1(id, height, dimension);
         switch (dimension) {
             case OVERWORLD -> processData(levelData, REGISTRY.getOrThrow(BuiltinDimensionTypes.OVERWORLD));
             case NETHER -> processData(levelData, REGISTRY.getOrThrow(BuiltinDimensionTypes.NETHER));
@@ -62,7 +61,7 @@ public class DataHandler_26_1 implements DataHandler<DimensionType, Holder<@NotN
     }
 
     @Override
-    public void processData(LevelData<DimensionType, ResourceKey<@NotNull DimensionType>, Holder<@NotNull DimensionType>> data, Holder<@NotNull DimensionType> holder) {
+    public void processData(LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> data, Holder<DimensionType> holder) {
         DimensionType old = holder.value();
         EnvironmentAttributeMap.Entry<Float, ?> entry = old.attributes().get(EnvironmentAttributes.CLOUD_HEIGHT);
         Float originalCloudHeight = entry == null ? null : entry.applyModifier(0f);
@@ -75,28 +74,28 @@ public class DataHandler_26_1 implements DataHandler<DimensionType, Holder<@NotN
             old.infiniburn(), old.ambientLight(), old.monsterSettings(),
             old.skybox(), old.cardinalLightType(), newAttributesBuilder.build(), old.timelines(), old.defaultClock()
         );
-        ResourceKey<@NotNull DimensionType> newResourceKey = ResourceKey.create(Registries.DIMENSION_TYPE, Identifier.fromNamespaceAndPath(data.getId().namespace(), data.getId().value()));
+        ResourceKey<DimensionType> newResourceKey = ResourceKey.create(Registries.DIMENSION_TYPE, Identifier.fromNamespaceAndPath(data.getId().namespace(), data.getId().value()));
         data.setDimensionType(newDimension);
         data.setResourceKey(newResourceKey);
-        Holder<@NotNull DimensionType> newHolder = register(data.getDimensionType(), data.getResourceKey());
+        Holder<DimensionType> newHolder = register(data.getDimensionType(), data.getResourceKey());
         data.setHolder(newHolder);
     }
 
     @Override
-    public Holder<@NotNull DimensionType> register(DimensionType dimensionType, ResourceKey<@NotNull DimensionType> resourceKey) {
+    public Holder<DimensionType> register(DimensionType dimensionType, ResourceKey<DimensionType> resourceKey) {
         set(MappedRegistry.class, "frozen", REGISTRY, false);
         set(MappedRegistry.class, "unregisteredIntrusiveHolders", REGISTRY, new IdentityHashMap<>());
         REGISTRY.createIntrusiveHolder(dimensionType);
-        Holder<@NotNull DimensionType> holder = REGISTRY.register(resourceKey, dimensionType, RegistrationInfo.BUILT_IN);
+        Holder<DimensionType> holder = REGISTRY.register(resourceKey, dimensionType, RegistrationInfo.BUILT_IN);
         set(MappedRegistry.class, "unregisteredIntrusiveHolders", REGISTRY, null);
         set(MappedRegistry.class, "frozen", REGISTRY, true);
         return holder;
     }
 
-    public void processWorld(World world, LevelData<DimensionType, ResourceKey<@NotNull DimensionType>, Holder<@NotNull DimensionType>> data) {
+    public void processWorld(World world, LevelData<DimensionType, ResourceKey<DimensionType>, Holder<DimensionType>> data) {
         ServerLevel level = ((CraftWorld) world).getHandle();
 
-        Holder<@NotNull DimensionType> holder = data.getHolder(world);
+        Holder<DimensionType> holder = data.getHolder(world);
         set(Level.class, "dimensionTypeRegistration", level, holder);
         StarLightInterface lightInterface = level.getLightEngine().starlight$getLightEngine();
         final int minY = data.getMinY();
