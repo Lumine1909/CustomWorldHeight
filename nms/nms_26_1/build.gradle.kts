@@ -3,7 +3,11 @@ plugins {
 }
 
 dependencies {
-    paperweight.paperDevBundle("26.1.1.build.9-alpha")
+    paperweight.paperDevBundle("26.1.2.build.65-stable")
     implementation(project(":api"))
     implementation(project(":core"))
+}
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(25))
 }

@@ -9,3 +9,7 @@ dependencies {
     implementation(project(":nms:nms_26_1"))
     compileOnly(libs.paper.api)
 }
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(25))
+}
