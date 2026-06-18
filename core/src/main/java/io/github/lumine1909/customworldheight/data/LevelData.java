@@ -70,7 +70,7 @@ public class LevelData<DimensionType, ResourceKey, Holder> {
         this.dimensionType = dimensionType;
     }
 
-    public Holder getHolder(World world) {
+    public Holder findHolder(World world) {
         if (holder != null) {
             return holder;
         }

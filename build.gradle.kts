@@ -7,12 +7,13 @@ plugins {
 }
 
 group = "io.github.lumine1909"
-version = "2.1.1"
+version = "2.2.0"
 description = "A plugin that allows you modify world's height"
 
 repositories {
     mavenCentral()
     gradlePluginPortal()
+    mavenLocal()
     maven("https://repo.papermc.io/repository/maven-public/")
 }
 
@@ -94,6 +95,6 @@ subprojects {
     }
 
     java {
-        toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+        toolchain.languageVersion.set(JavaLanguageVersion.of(25))
     }
 }

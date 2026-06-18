@@ -4,6 +4,7 @@ shadow = "9.4.1"
 publish = "0.36.0"
 paper-api = "1.20.4-R0.1-SNAPSHOT"
 reflexion = "0.5.1"
+proxying = "1.0.1"
 minotaur = "2.+"
 
 [plugins]
@@ -15,3 +16,4 @@ minotaur = { id = "com.modrinth.minotaur", version.ref = "minotaur" }
 [libraries]
 paper-api = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper-api" }
 reflexion = { group = "io.github.lumine1909", name = "reflexion", version.ref = "reflexion" }
+proxying = { group = "com.example", name = "Proxying", version.ref = "proxying" }
