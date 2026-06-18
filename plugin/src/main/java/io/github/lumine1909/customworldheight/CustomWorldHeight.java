@@ -23,15 +23,9 @@ public class CustomWorldHeight extends JavaPlugin implements Listener {
     public static int obtainVersion() {
         try {
             String[] versions = Bukkit.getMinecraftVersion().split("\\.");
-            if (versions.length == 2) {
-                return versions[0].equals("1")
-                    ? Integer.parseInt(versions[1]) * 100
-                    : Integer.parseInt(versions[0]) * 100 + Integer.parseInt(versions[1]);
-            } else if (versions.length == 3) {
-                return versions[0].equals("1") ?
-                    Integer.parseInt(versions[1]) * 100 + Integer.parseInt(versions[2])
-                    : Integer.parseInt(versions[0]) * 100 + Integer.parseInt(versions[1]) * 10 + Integer.parseInt(versions[2]);
-            }
+            return Integer.parseInt(versions[0]) * 10000
+                + (versions.length > 1 ? Integer.parseInt(versions[1]) : 0) * 100
+                + (versions.length > 2 ? Integer.parseInt(versions[2]) : 0);
         } catch (Exception ignored) {
         }
         return -1;
@@ -51,17 +45,19 @@ public class CustomWorldHeight extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         int version = obtainVersion();
-        if (version >= 2600) {
+        if (version >= 260200) {
+            dataHandler = new DataHandler_26_2();
+        } else if (version >= 260000) {
             dataHandler = new DataHandler_26_1();
-        } else if (version >= 2111) {
+        } else if (version >= 12111) {
             dataHandler = new DataHandler_1_21_11();
-        } else if (version >= 2106) {
+        } else if (version >= 12106) {
             dataHandler = new DataHandler_1_21_6();
-        } else if (version >= 2103) {
+        } else if (version >= 12103) {
             dataHandler = new DataHandler_1_21_3();
-        } else if (version >= 2100) {
+        } else if (version >= 12100) {
             dataHandler = new DataHandler_1_21();
-        } else if (version >= 2005) {
+        } else if (version >= 12005) {
             dataHandler = new DataHandler_1_20_5();
         } else {
             throw new RuntimeException("Unsupported version: " + version);
