@@ -65,9 +65,11 @@ public class DataHandler_1_21_11 implements DataHandler<DimensionType, Holder<Di
         DimensionType old = holder.value();
         EnvironmentAttributeMap.Entry<Float, ?> entry = old.attributes().get(EnvironmentAttributes.CLOUD_HEIGHT);
         Float originalCloudHeight = entry == null ? null : entry.applyModifier(0f);
-        EnvironmentAttributeMap.Builder newAttributesBuilder = EnvironmentAttributeMap.builder()
-            .putAll(old.attributes());
-        data.computeCloudHeight(originalCloudHeight).ifPresent(value -> newAttributesBuilder.set(EnvironmentAttributes.CLOUD_HEIGHT, value));
+        EnvironmentAttributeMap.Builder newAttributesBuilder = EnvironmentAttributeMap.builder().putAll(old.attributes());
+        data.computeCloudHeight(originalCloudHeight).ifPresentOrElse(
+            value -> newAttributesBuilder.set(EnvironmentAttributes.CLOUD_HEIGHT, value),
+            () -> newAttributesBuilder.set(EnvironmentAttributes.CLOUD_COLOR, 0)
+        );
         DimensionType newDimension = new DimensionType(
             old.hasFixedTime(), old.hasSkyLight(), old.hasCeiling(), old.coordinateScale(),
             data.getMinY(), data.getHeight(), data.getLogicalHeight(),

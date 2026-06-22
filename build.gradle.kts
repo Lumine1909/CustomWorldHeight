@@ -13,7 +13,6 @@ description = "A plugin that allows you modify world's height"
 repositories {
     mavenCentral()
     gradlePluginPortal()
-    mavenLocal()
     maven("https://repo.papermc.io/repository/maven-public/")
 }
 
@@ -28,6 +27,7 @@ dependencies {
     implementation(project(":nms:nms_1_21_6"))
     implementation(project(":nms:nms_1_21_11"))
     implementation(project(":nms:nms_26_1"))
+    implementation(project(":nms:nms_26_2"))
 }
 
 
@@ -95,6 +95,6 @@ subprojects {
     }
 
     java {
-        toolchain.languageVersion.set(JavaLanguageVersion.of(25))
+        toolchain.languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
