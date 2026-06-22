@@ -5,7 +5,13 @@ import com.example.proxying.api.ProxySupplier;
 import com.example.proxying.api.annotation.Proxy;
 import com.example.proxying.api.annotation.Set;
 
-@Proxy(target = "io.papermc.paper.chunk.system.entity.EntityLookup", allOptionalByDefault = true)
+@Proxy(
+    target = {
+        "io.papermc.paper.chunk.system.entity.EntityLookup",
+        "ca.spottedleaf.moonrise.patches.chunk_system.level.entity.EntityLookup"
+    },
+    allOptionalByDefault = true
+)
 public interface EntityLookupProxy {
 
     ProxySupplier<EntityLookupProxy> SERVICE = ProxyService.get().register(EntityLookupProxy.class);

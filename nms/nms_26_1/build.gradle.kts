@@ -1,10 +1,6 @@
-import io.papermc.paperweight.userdev.ReobfArtifactConfiguration
-
 plugins {
     alias(libs.plugins.paperweight.userdev)
 }
-
-paperweight.reobfArtifactConfiguration = ReobfArtifactConfiguration.MOJANG_PRODUCTION
 
 dependencies {
     paperweight.paperDevBundle("26.1.2.build.+")

@@ -43,7 +43,9 @@ tasks {
         mergeServiceFiles()
 
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
+        manifest.attributes(
+            "paperweight-mappings-namespace" to "mojang"
+        )
         subprojects.forEach { sub ->
             dependsOn(sub.tasks.jar)
             from(sub.tasks.jar.flatMap { it.archiveFile }.map { zipTree(it) })
