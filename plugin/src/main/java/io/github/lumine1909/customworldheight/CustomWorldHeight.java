@@ -4,6 +4,7 @@ import io.github.lumine1909.customworldheight.api.WorldHeightService;
 import io.github.lumine1909.customworldheight.config.LevelConfig;
 import io.github.lumine1909.customworldheight.data.*;
 import io.github.lumine1909.customworldheight.metrics.Metrics;
+import io.github.lumine1909.customworldheight.util.NmsLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -45,23 +46,7 @@ public class CustomWorldHeight extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         int version = obtainVersion();
-        if (version >= 260200) {
-            dataHandler = new DataHandler_26_2();
-        } else if (version >= 260000) {
-            dataHandler = new DataHandler_26_1();
-        } else if (version >= 12111) {
-            dataHandler = new DataHandler_1_21_11();
-        } else if (version >= 12106) {
-            dataHandler = new DataHandler_1_21_6();
-        } else if (version >= 12103) {
-            dataHandler = new DataHandler_1_21_3();
-        } else if (version >= 12100) {
-            dataHandler = new DataHandler_1_21();
-        } else if (version >= 12005) {
-            dataHandler = new DataHandler_1_20_5();
-        } else {
-            throw new RuntimeException("Unsupported version: " + version);
-        }
+        dataHandler = NmsLoader.loadDataHandler(version);
         levelConfig = new LevelConfig(getConfig());
         Bukkit.getServicesManager().register(WorldHeightService.class, levelConfig, this, ServicePriority.Normal);
         Bukkit.getPluginManager().registerEvents(new WorldListener(), this);

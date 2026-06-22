@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "io.github.lumine1909"
-version = "2.1.1"
+version = "2.2.0"
 description = "A plugin that allows you modify world's height"
 
 repositories {
@@ -27,6 +27,7 @@ dependencies {
     implementation(project(":nms:nms_1_21_6"))
     implementation(project(":nms:nms_1_21_11"))
     implementation(project(":nms:nms_26_1"))
+    implementation(project(":nms:nms_26_2"))
 }
 
 
@@ -42,7 +43,9 @@ tasks {
         mergeServiceFiles()
 
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
+        manifest.attributes(
+            "paperweight-mappings-namespace" to "mojang"
+        )
         subprojects.forEach { sub ->
             dependsOn(sub.tasks.jar)
             from(sub.tasks.jar.flatMap { it.archiveFile }.map { zipTree(it) })

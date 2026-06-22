@@ -8,6 +8,10 @@ dependencies {
     implementation(project(":core"))
 }
 
+tasks.getByName("reobfJar") {
+    enabled = false
+}
+
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(25))
 }

@@ -47,7 +47,7 @@ public class LevelConfig implements WorldHeightService {
         for (String key : config.getKeys(false)) {
             Identifier id = Identifier.of("customworldheight", key);
             String name = config.getString(key + ".world", null);
-            String regex = config.getString(key + ".regex", "\\w\\b\\w"); // Don't match anything
+            String regex = config.getString(key + ".regex", "\\b\\B"); // Don't match anything
             int height = config.getInt(key + ".height", 384);
             int minY = config.getInt(key + ".min-y", -64);
             int logicalHeight = config.getInt(key + ".logical-height", 256);
