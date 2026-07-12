@@ -121,3 +121,4 @@ The [API](api) part is licensed under the [LGPL 3.0 License](api/LICENSE).
 If you encounter any issues or have questions, feel free to open an [issue](https://github.com/Lumine1909/CustomWorldHeight/issues).
 
 ---
+[![bStats](https://bstats.org/signatures/bukkit/CustomWorldHeight.svg)](https://bstats.org/plugin/bukkit/CustomWorldHeight/26056)
