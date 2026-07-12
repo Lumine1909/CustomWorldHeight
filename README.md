@@ -68,8 +68,8 @@ public void modifyHeight() {
 # You can set to anything you want ([a-z0-9/._-]), will be used to generate Identifier (ResourceLocation)
 example-namespace:
 
-  # Set the name for certain world
-  world: 'example-world-name'
+  # Set the height for certain world, you need set it to the world name you want to modify the height
+  world: 'example-world-value'
 
   # Min Y position
   min-y: -64
@@ -77,15 +77,15 @@ example-namespace:
   # Height (max Y position = min-y + height - 1)
   height: 1024
 
-  # Height for Chorus Fruit teleport and etc. See wiki for details
+  # Height for Chorus Fruit teleport and etc., cannot be greater than height. See Minecraft wiki#DimensionType for details
   logical-height: 512
 
   # Height for the cloud (empty -> do not have cloud, default -> use default height)
-  # This feature is only for 1.21.6+
+  # This feature only works on 1.21.6+
   cloud-height: 'default'
 
-  # This will let the plugin process registration data when world load
-  dimension-type: 'custom'
+  # For 'overworld', 'the_nether', 'the_end', 'overworld_cave', this will use built in data to generate before world is initializing
+  dimension-type: 'overworld'
 
 # You can set to anything you want ([a-z0-9/._-]), will be used to generate Identifier (ResourceLocation)
 example-regex:
@@ -99,15 +99,15 @@ example-regex:
   # Height (max Y position = min-y + height - 1)
   height: 1024
 
-  # Height for Chorus Fruit teleport and etc, cannot be greater than height. See Minecraft wiki#DimensionType for details
+  # Height for Chorus Fruit teleport and etc., cannot be greater than height. See Minecraft wiki#DimensionType for details
   logical-height: 512
 
   # Height for the cloud (empty -> do not have cloud, default -> use default height)
-  # This feature is only for 1.21.6+
+  # This feature only works on 1.21.6+
   cloud-height: 256
 
-  # For 'overworld', 'the_nether', 'the_end', 'overworld_cave', this will use built in data to generate before world is initializing
-  dimension-type: 'overworld'
+  # This will let the plugin process registration data when world load
+  dimension-type: 'custom'
 ```
 [Minecraft wiki about logical height](https://minecraft.wiki/w/Dimension_type#:~:text=%5BInt%5D-,logical_height,-%3A%20The%20maximum%20height)
 
