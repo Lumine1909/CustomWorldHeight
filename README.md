@@ -69,7 +69,7 @@ public void modifyHeight() {
 example-namespace:
 
   # Set the height for certain world, you need set it to the world name you want to modify the height
-  world: 'example-world-value'
+  world: 'example-world-name'
 
   # Min Y position
   min-y: -64
