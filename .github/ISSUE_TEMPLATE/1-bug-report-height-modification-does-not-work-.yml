@@ -1,56 +1,56 @@
-name: Bug report - Height modification does not work!
-description: Create a report for height didn't modified
-title: "[Bug - height modification does not work]"
+name: Bug report - Height modification does not work
+description: Create a report when height modification does not work.
+title: "[Bug] Height modification does not work"
 labels: []
 
 body:
-- type: markdown
-  attributes:
-  value: |
-  Thanks for taking the time to report this issue!
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this issue!
 
-- type: textarea
-  id: config
-  attributes:
-  label: Config
-  description: Paste the configuration corresponding to the world that is not working.
-  placeholder: Paste your configuration here...
-  validations:
-  required: true
+  - type: textarea
+    id: config
+    attributes:
+      label: Config
+      description: Paste the configuration corresponding to the world that is not working.
+      placeholder: Paste your configuration here...
+    validations:
+      required: true
 
-- type: input
-  id: world
-  attributes:
-  label: World to modify but failed
-  description: The name of the world where height modification failed.
-  placeholder: world
-  validations:
-  required: true
+  - type: input
+    id: world
+    attributes:
+      label: World to modify but failed
+      description: The name of the world where height modification failed.
+      placeholder: world
+    validations:
+      required: true
 
-- type: input
-  id: server
-  attributes:
-  label: Server brand and version
-  description: For example, paper-1.21.11-132
-  placeholder: paper-1.21.11-132
-  validations:
-  required: true
+  - type: input
+    id: server
+    attributes:
+      label: Server brand and version
+      description: For example, paper-1.21.11-132
+      placeholder: paper-1.21.11-132
+    validations:
+      required: true
 
-- type: textarea
-  id: error-log
-  attributes:
-  label: Error log (if exists)
-  description: If the log is too long, upload it to mclo.gs and paste the link here.
-  placeholder: https://mclo.gs/...
-  render: shell
-  validations:
-  required: false
+  - type: textarea
+    id: error-log
+    attributes:
+      label: Error log (if it exists)
+      description: If the log is too long, upload it to mclo.gs and paste the link here.
+      placeholder: https://mclo.gs/...
+      render: shell
+    validations:
+      required: false
 
-- type: textarea
-  id: additional-context
-  attributes:
-  label: Additional context
-  description: Add any other context about the problem here.
-  placeholder: Anything else that may help reproduce or diagnose the issue.
-  validations:
-  required: false
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here.
+      placeholder: Anything else that may help reproduce or diagnose the issue.
+    validations:
+      required: false
