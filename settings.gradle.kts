@@ -10,6 +10,7 @@ include(":nms:nms_1_21_6")
 include(":nms:nms_1_21_11")
 include(":nms:nms_26_1")
 include(":nms:nms_26_2")
+include(":nms:nms_26_3")
 
 pluginManagement {
     pluginManagement {

@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "io.github.lumine1909"
-version = "2.2.0"
+version = "2.3.0"
 description = "A plugin that allows you modify world's height"
 
 repositories {
@@ -28,6 +28,7 @@ dependencies {
     implementation(project(":nms:nms_1_21_11"))
     implementation(project(":nms:nms_26_1"))
     implementation(project(":nms:nms_26_2"))
+    implementation(project(":nms:nms_26_3"))
 }
 
 
@@ -38,7 +39,7 @@ java {
 tasks {
     shadowJar {
         archiveVersion.set(version.toString())
-        archiveFileName.set("CustomWorldHeight-${version}+1.20.5-26.2.jar")
+        archiveFileName.set("CustomWorldHeight-${version}+1.20.5-26.3.jar")
         archiveClassifier.set("")
         mergeServiceFiles()
 
@@ -83,6 +84,7 @@ modrinth {
     gameVersions.addAll(generateVersions("1.21", 0, 11))
     gameVersions.addAll(generateVersions("26.1", 0, 2))
     gameVersions.addAll(generateVersions("26.2", 0, 0))
+    gameVersions.addAll(generateVersions("26.3", 0, 0))
 }
 
 fun generateVersions(mm: String, start: Int, end: Int): List<String> = (start..end).map { if (it == 0) mm else "$mm.$it" }

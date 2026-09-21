@@ -16,6 +16,7 @@ public class NmsLoader {
         put(12111, "io.github.lumine1909.customworldheight.data.DataHandler_1_21_11");
         put(260000, "io.github.lumine1909.customworldheight.data.DataHandler_26_1");
         put(260200, "io.github.lumine1909.customworldheight.data.DataHandler_26_2");
+        put(260300, "io.github.lumine1909.customworldheight.data.DataHandler_26_3");
     }};
 
     public static DataHandler<?, ?, ?> loadDataHandler(int version) {
