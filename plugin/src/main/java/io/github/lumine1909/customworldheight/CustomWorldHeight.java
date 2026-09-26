@@ -2,9 +2,13 @@ package io.github.lumine1909.customworldheight;
 
 import io.github.lumine1909.customworldheight.api.WorldHeightService;
 import io.github.lumine1909.customworldheight.config.LevelConfig;
-import io.github.lumine1909.customworldheight.data.*;
+import io.github.lumine1909.customworldheight.data.DataHandler;
 import io.github.lumine1909.customworldheight.metrics.Metrics;
 import io.github.lumine1909.customworldheight.util.NmsLoader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.Logger;
+import org.apache.logging.log4j.core.filter.AbstractFilter;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -51,6 +55,20 @@ public class CustomWorldHeight extends JavaPlugin implements Listener {
         Bukkit.getServicesManager().register(WorldHeightService.class, levelConfig, this, ServicePriority.Normal);
         Bukkit.getPluginManager().registerEvents(new WorldListener(), this);
         Bukkit.getPluginManager().registerEvents(this, this);
+        if (!Boolean.getBoolean("CWHEnableHeightmapLog")) {
+            try {
+                Logger logger = (Logger) LogManager.getRootLogger();
+                logger.addFilter(new AbstractFilter() {
+                    @Override
+                    public Result filter(LogEvent event) {
+                        String message = event.getMessage().getFormattedMessage();
+                        return message != null && message.contains("Ignoring heightmap data for chunk") ? Result.DENY : Result.NEUTRAL;
+                    }
+                });
+            } catch (Exception e) {
+                getSLF4JLogger().error("Failed to inject log filter for heightmap", e);
+            }
+        }
         new Metrics(this, 26056);
     }
 
